@@ -1,0 +1,46 @@
+version: "3.9"
+services:
+  local:
+    image: postgres
+    hostname: local
+    env_file:
+      - ./.env
+    environment:
+      - POSTGRES_USER=${DATABASE_USER}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+      - POSTGRES_DB=local-db
+    ports:
+      - 54321:5432
+  shadow-local:
+    image: postgres
+    hostname: cloud
+    env_file:
+      - ./.env
+    environment:
+      - POSTGRES_USER=${DATABASE_USER}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+      - POSTGRES_DB=shadow-local-db
+    ports:
+      - 54322:5432
+  cloud:
+    image: postgres
+    hostname: local
+    env_file:
+      - ./.env
+    environment:
+      - POSTGRES_USER=${DATABASE_USER}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+      - POSTGRES_DB=cloud-db
+    ports:
+      - 54323:5432
+  shadow-cloud:
+    image: postgres
+    hostname: cloud
+    env_file:
+      - ./.env
+    environment:
+      - POSTGRES_USER=${DATABASE_USER}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+      - POSTGRES_DB=shadow-cloud-db
+    ports:
+      - 54324:5432
